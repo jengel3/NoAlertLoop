@@ -1,0 +1,9 @@
+Package: com.jake0oo0.noalertloop
+Name: NoAlertLoop
+Depends: mobilesubstrate
+Version: 1.0.0
+Architecture: iphoneos-arm
+Description: Prevent websites from infinitely creating popups
+Maintainer: Jake0oo0 <jake0oo0dev@gmail.com>
+Author: Jake0oo0 <jake0oo0dev@gmail.com>
+Section: Tweaks
