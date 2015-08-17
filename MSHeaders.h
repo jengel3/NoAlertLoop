@@ -1,11 +1,5 @@
 #import <UIKit/UIKit.h>
 
-@interface TabDocument
--(BOOL)runJavaScriptConfirmPanelWithMessage:(id)msg initiatedByFrameWithURL:(id)url;
--(void)runJavaScriptAlertPanelWithMessage:(id)msg initiatedByFrameWithURL:(id)url;
--(id)webView;
-@end
-
 @interface TabDocumentWK2 <UIAlertViewDelegate>
 -(id)URLString;
 -(BOOL)runJavaScriptConfirmPanelWithMessage:(id)msg initiatedByFrameWithURL:(id)url;
