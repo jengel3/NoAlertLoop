@@ -6,9 +6,11 @@ include theos/makefiles/common.mk
 
 TWEAK_NAME = NoAlertLoop
 NoAlertLoop_FILES = Tweak.xm
-NoAlertLoop_FRAMEWORKS = UIKit Foundation
+NoAlertLoop_FRAMEWORKS = UIKit Foundation WebKit
 
 include $(THEOS_MAKE_PATH)/tweak.mk
 
 after-install::
 	install.exec "killall -9 MobileSafari"
+SUBPROJECTS += noalertloopprefs
+include $(THEOS_MAKE_PATH)/aggregate.mk
