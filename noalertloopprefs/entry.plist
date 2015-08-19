@@ -3,7 +3,7 @@
 		bundle = NoAlertLoopPrefs;
 		cell = PSLinkCell;
 		detail = NoAlertLoopPrefsListController;
-		icon = refresh-ps.png;
+		icon = NoAlertLoop.png;
 		isController = 1;
 		label = NoAlertLoop;
     };
