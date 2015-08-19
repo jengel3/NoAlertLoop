@@ -3,3 +3,5 @@ obj/
 theos/
 _/
 .theos
+noalertloopprefs/obj/
+noalertloopprefs/theos/
