@@ -16,6 +16,34 @@
 			<key>label</key>
 			<string>Enabled</string>
 		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Follow me?</string>
+		</dict>
+		<dict>
+			<key>action</key>
+			<string>openTwitter:</string>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>label</key>
+			<string>Follow me on Twitter</string>
+		</dict>
+		<dict>
+			<key>action</key>
+			<string>openGithub:</string>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>label</key>
+			<string>Follow me on Github</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>I could use new icons if anyone is willing to make them :)</string>
+		</dict>
 	</array>
 	<key>title</key>
 	<string>NoAlertLoop</string>
