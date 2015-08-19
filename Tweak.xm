@@ -5,14 +5,15 @@
 NSDate *lastAlert = nil;
 NSMutableArray *blocked = [[[NSMutableArray alloc] init] retain];
 NSMutableArray *ignored = [[[NSMutableArray alloc] init] retain];
+NSString *prefsLoc = @"/var/mobile/Library/Preferences/com.jake0oo0.noalertloop.plist";
+BOOL enabled = nil;
 BOOL alertShowing = false;
 NSString *appUrl = nil;
 
-%group safariHooks
+%group webHooks
 %hook TabDocumentWK2
 -(void) webView:(id)web runJavaScriptAlertPanelWithMessage:(id)msg initiatedByFrame:(id)frame completionHandler:(void (^)(NSString *param))completionBlock {
-	NSLog(@"Type of this: %@", [web class]);
-	if (lastAlert) {
+	if (lastAlert && enabled) {
 		NSTimeInterval secondsBetween = [[NSDate date] timeIntervalSinceDate:lastAlert];
 		if ([blocked containsObject:[self URLString]] || alertShowing) {
 			lastAlert = [[NSDate date]retain];
@@ -55,9 +56,8 @@ NSString *appUrl = nil;
 
 %hook UIWebView
 - (void)webView:(id)view runJavaScriptAlertPanelWithMessage:(id)msg initiatedByFrame:(id)frame{
-	appUrl = [[view mainFrameURL]retain];
-	NSLog(@"Url: %@", appUrl);
-	if (lastAlert) {
+	if (lastAlert && enabled) {
+		appUrl = [[view mainFrameURL]retain];
 		NSTimeInterval secondsBetween = [[NSDate date] timeIntervalSinceDate:lastAlert];
 		if ([blocked containsObject:appUrl] || alertShowing) {
 			lastAlert = [[NSDate date]retain];
@@ -84,7 +84,9 @@ NSString *appUrl = nil;
 
 %new(v@:@i)
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(long)buttonIndex {
-	NSLog(@"this alert - %@", alertView);
+	if (![alertView.title isEqualToString:@"NoAlertLoop"]) {
+		return;
+	}
 	if (buttonIndex == 0) { // yes 
 		[blocked addObject:appUrl];
 	} else {
@@ -94,6 +96,23 @@ NSString *appUrl = nil;
 }
 %end
 %end
+
+static void updatePrefs() {
+	NSDictionary *prefs = [[[NSDictionary alloc] initWithContentsOfFile:prefsLoc] retain];
+ 	enabled = [prefs objectForKey:@"enabled"] ? [[prefs objectForKey:@"enabled"] boolValue] : YES;
+}
+
+
+static void handleNotification(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
+	updatePrefs();
+}
+
 %ctor {
-	%init(safariHooks);
+	%init(webHooks);
+	updatePrefs();
+	CFNotificationCenterAddObserver(
+		CFNotificationCenterGetDarwinNotifyCenter(), NULL,
+		&handleNotification,
+		(CFStringRef)@"com.jake0oo0.noalertloop/prefsChange",
+		NULL, CFNotificationSuspensionBehaviorCoalesce);
 }
