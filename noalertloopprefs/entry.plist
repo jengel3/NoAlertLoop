@@ -1,10 +1,10 @@
 {
     entry = {
-		bundle = NoAlertLoopPrefs;
+		bundle = "NoAlertLoopPrefs";
 		cell = PSLinkCell;
-		detail = NoAlertLoopPrefsListController;
-		icon = NoAlertLoop.png;
+		detail = "NoAlertLoopPrefsListController";
+		icon = "NoAlertLoop.png";
 		isController = 1;
-		label = NoAlertLoop;
+		label = "NoAlertLoop";
     };
 }
